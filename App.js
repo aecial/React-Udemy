@@ -12,6 +12,11 @@ export default function App() {
     setGoals((prev) => [...prev, enteredGoalText]);
     setEnteredGoalText("");
   };
+  const removeGoalHandler = (goal) => {
+    setGoals((prevGoals) => {
+      return prevGoals.filter((singleGoal) => singleGoal !== goal);
+    });
+  };
   return (
     <View style={styles.appContainer}>
       <View style={styles.inputContainer}>
@@ -25,7 +30,17 @@ export default function App() {
       </View>
       <View>
         {goals && goals.length > 0 ? (
-          goals.map((goal, index) => <Text key={index}>{goal}</Text>)
+          goals.map((goal, index) => (
+            <View style={styles.rowContainer} key={`${index}-${goal}`}>
+              <Text key={index}>{goal}</Text>
+              <Button
+                key={goal}
+                style={styles.buttonRow}
+                onPress={() => removeGoalHandler(goal)}
+                title={`Delete ${goal}`}
+              ></Button>
+            </View>
+          ))
         ) : (
           <Text>List of Goals....</Text>
         )}
@@ -51,5 +66,16 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     width: "70%",
     padding: 5,
+  },
+  rowContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginBottom: 16,
+  },
+  buttonRow: {
+    width: 20,
+    backgroundColor: "red",
+    color: "white",
   },
 });
