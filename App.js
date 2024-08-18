@@ -1,4 +1,3 @@
-import { StatusBar } from "expo-status-bar";
 import { useState } from "react";
 import {
   StyleSheet,
@@ -8,6 +7,9 @@ import {
   TextInput,
   FlatList,
 } from "react-native";
+import Title from "./components/Title";
+import GoalInput from "./components/GoalInput";
+import GoalItem from "./components/GoalItem";
 
 export default function App() {
   const [enteredGoalText, setEnteredGoalText] = useState("");
@@ -26,32 +28,18 @@ export default function App() {
   };
   return (
     <View style={styles.appContainer}>
-      <View style={styles.inputContainer}>
-        <TextInput
-          style={styles.textInput}
-          placeholder="Enter Your Goal"
-          onChangeText={goalInputHandler}
-          value={enteredGoalText}
-        />
-        <Button title="Add Goal" onPress={addGoalHandler} />
-      </View>
+      <Title text={"Goal Tracker"} />
+      <GoalInput
+        addGoalHandler={addGoalHandler}
+        goalInputHandler={goalInputHandler}
+        enteredGoalText={enteredGoalText}
+      />
       <View>
         <FlatList
           data={goals}
           renderItem={(item) => {
             return (
-              <View
-                style={styles.rowContainer}
-                key={`${item.index}-${item.item}`}
-              >
-                <Text key={item.index}>{item.item}</Text>
-                <Button
-                  key={item.item}
-                  style={styles.buttonRow}
-                  onPress={() => removeGoalHandler(item.item)}
-                  title={`Delete ${item.item}`}
-                ></Button>
-              </View>
+              <GoalItem item={item} removeGoalHandler={removeGoalHandler} />
             );
           }}
         />
@@ -64,29 +52,5 @@ const styles = StyleSheet.create({
   appContainer: {
     paddingTop: 50,
     paddingHorizontal: 16,
-  },
-  inputContainer: {
-    // backgroundColor: "green",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    gap: 10,
-    paddingBottom: 24,
-  },
-  textInput: {
-    borderColor: "gray",
-    borderWidth: 1,
-    width: "70%",
-    padding: 5,
-  },
-  rowContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    marginBottom: 16,
-  },
-  buttonRow: {
-    width: 20,
-    backgroundColor: "red",
-    color: "white",
   },
 });
