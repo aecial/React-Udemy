@@ -1,6 +1,13 @@
 import { StatusBar } from "expo-status-bar";
 import { useState } from "react";
-import { StyleSheet, Text, View, Button, TextInput } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Button,
+  TextInput,
+  FlatList,
+} from "react-native";
 
 export default function App() {
   const [enteredGoalText, setEnteredGoalText] = useState("");
@@ -29,21 +36,25 @@ export default function App() {
         <Button title="Add Goal" onPress={addGoalHandler} />
       </View>
       <View>
-        {goals && goals.length > 0 ? (
-          goals.map((goal, index) => (
-            <View style={styles.rowContainer} key={`${index}-${goal}`}>
-              <Text key={index}>{goal}</Text>
-              <Button
-                key={goal}
-                style={styles.buttonRow}
-                onPress={() => removeGoalHandler(goal)}
-                title={`Delete ${goal}`}
-              ></Button>
-            </View>
-          ))
-        ) : (
-          <Text>List of Goals....</Text>
-        )}
+        <FlatList
+          data={goals}
+          renderItem={(item) => {
+            return (
+              <View
+                style={styles.rowContainer}
+                key={`${item.index}-${item.item}`}
+              >
+                <Text key={item.index}>{item.item}</Text>
+                <Button
+                  key={item.item}
+                  style={styles.buttonRow}
+                  onPress={() => removeGoalHandler(item.item)}
+                  title={`Delete ${item.item}`}
+                ></Button>
+              </View>
+            );
+          }}
+        />
       </View>
     </View>
   );
