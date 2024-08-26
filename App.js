@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { StyleSheet, View, FlatList } from "react-native";
+import { StyleSheet, View, FlatList, Button } from "react-native";
 import Title from "./components/Title";
 import GoalInput from "./components/GoalInput";
 import GoalItem from "./components/GoalItem";
@@ -7,12 +7,14 @@ import GoalItem from "./components/GoalItem";
 export default function App() {
   const [enteredGoalText, setEnteredGoalText] = useState("");
   const [goals, setGoals] = useState([]);
+  const [openModal, setOpenModal] = useState(false);
   const goalInputHandler = (enteredText) => {
     setEnteredGoalText(enteredText);
   };
   const addGoalHandler = () => {
     setGoals((prev) => [...prev, enteredGoalText]);
     setEnteredGoalText("");
+    setOpenModal(false);
   };
   const removeGoalHandler = (goal) => {
     setGoals((prevGoals) => {
@@ -22,12 +24,18 @@ export default function App() {
   return (
     <View style={styles.appContainer}>
       <Title text={"Goal Tracker"} />
+      <Button
+        color="#2C5C4F"
+        title="Add Goal"
+        onPress={() => setOpenModal(true)}
+      />
       <GoalInput
+        openModal={openModal}
         addGoalHandler={addGoalHandler}
         goalInputHandler={goalInputHandler}
         enteredGoalText={enteredGoalText}
       />
-      <View>
+      <View style={styles.goalContainer}>
         <FlatList
           data={goals}
           renderItem={(item) => {
@@ -45,5 +53,8 @@ const styles = StyleSheet.create({
   appContainer: {
     paddingTop: 50,
     paddingHorizontal: 16,
+  },
+  goalContainer: {
+    marginTop: 16,
   },
 });
