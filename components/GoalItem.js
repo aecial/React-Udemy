@@ -1,7 +1,10 @@
 import { StyleSheet, View, Text, Button, Pressable } from "react-native";
 const GoalItem = ({ removeGoalHandler, item }) => {
   return (
-    <Pressable onPress={() => removeGoalHandler(item.item)}>
+    <Pressable
+      android_ripple={{ color: "#2C5C4F" }}
+      onPress={() => removeGoalHandler(item.item)}
+    >
       <View style={styles.rowContainer} key={`${item.index}-${item.item}`}>
         <Text style={styles.bodyText} key={item.index}>
           {item.item}
