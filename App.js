@@ -16,6 +16,9 @@ export default function App() {
     setEnteredGoalText("");
     setOpenModal(false);
   };
+  const closeModal = () => {
+    setOpenModal(false);
+  };
   const removeGoalHandler = (goal) => {
     setGoals((prevGoals) => {
       return prevGoals.filter((singleGoal) => singleGoal !== goal);
@@ -34,6 +37,7 @@ export default function App() {
         addGoalHandler={addGoalHandler}
         goalInputHandler={goalInputHandler}
         enteredGoalText={enteredGoalText}
+        closeModal={closeModal}
       />
       <View style={styles.goalContainer}>
         <FlatList

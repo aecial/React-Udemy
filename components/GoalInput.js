@@ -4,6 +4,7 @@ function GoalInput({
   enteredGoalText,
   addGoalHandler,
   openModal,
+  closeModal,
 }) {
   return (
     <Modal visible={openModal} animationType="slide">
@@ -14,28 +15,37 @@ function GoalInput({
           onChangeText={goalInputHandler}
           value={enteredGoalText}
         />
-        <Button
-          title="Add Goal"
-          onPress={addGoalHandler}
-          disabled={enteredGoalText === ""}
-        />
+        <View style={styles.buttonContainer}>
+          <Button
+            title="Add Goal"
+            onPress={addGoalHandler}
+            disabled={enteredGoalText === ""}
+          />
+          <Button title="Cancel" onPress={closeModal} color={"gray"} />
+        </View>
       </View>
     </Modal>
   );
 }
 const styles = StyleSheet.create({
   inputContainer: {
-    // backgroundColor: "green",
-    flexDirection: "row",
-    justifyContent: "space-between",
+    flex: 1,
+    justifyContent: "center",
+
     gap: 10,
-    paddingBottom: 24,
+    padding: 8,
   },
   textInput: {
     borderColor: "gray",
     borderWidth: 1,
-    width: "70%",
+    width: "100%",
     padding: 5,
+  },
+  buttonContainer: {
+    flexDirection: "row-reverse",
+    width: "100%",
+    justifyContent: "center",
+    gap: 16,
   },
 });
 
