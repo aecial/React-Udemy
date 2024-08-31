@@ -3,6 +3,7 @@ import { StyleSheet, View, FlatList, Button } from "react-native";
 import Title from "./components/Title";
 import GoalInput from "./components/GoalInput";
 import GoalItem from "./components/GoalItem";
+import { StatusBar } from "expo-status-bar";
 
 export default function App() {
   const [enteredGoalText, setEnteredGoalText] = useState("");
@@ -49,6 +50,7 @@ export default function App() {
           }}
         />
       </View>
+      <StatusBar style="auto" />
     </View>
   );
 }
